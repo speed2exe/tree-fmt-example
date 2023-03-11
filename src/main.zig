@@ -9,7 +9,7 @@ pub fn main() !void {
 
 fn quickExample() !void {
     std.debug.print("\nQuick Example:\n", .{});
-    try fmt.formatValue(.{ 1, 2.4, "hi" });
+    try fmt.format(.{ 1, 2.4, "hi" }, .{});
 }
 
 fn fullExample() !void {
@@ -29,14 +29,17 @@ fn fullExample() !void {
     var w = std.io.getStdOut().writer();
 
     // tree formatter (the actual formatter you use)
-    var tree_formatter = treeFormatter(allocator, w, .{});
+    var tree_formatter = treeFormatter(allocator, w);
 
     // complicated structure to debug
     var ast = try std.zig.Ast.parse(allocator, zig_code, .zig);
     defer ast.deinit(allocator);
 
     // print the structure
-    try tree_formatter.formatValueWithId(ast.tokens, "MyFavoriteAst");
+    try tree_formatter.format(ast.tokens, .{
+        .name = "MyFavoriteAst",
+        // other options ...
+    });
 }
 
 const zig_code =

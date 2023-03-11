@@ -3,8 +3,8 @@
     .version = "0.0.1",
     .dependencies = .{
         .tree_fmt = .{
-            .url = "https://github.com/speed2exe/tree-fmt/archive/3272ae1ac9f01b7daa35faa5d9b2eb3876b438cc.tar.gz",
-            .hash = "1220ad0d5a26fecd5f07f1437620ecc865d04a1131168b39045d55f8c8d45d482ac0",
+            .url = "https://github.com/speed2exe/tree-fmt/archive/c2ea91a9bebf35cc72803f9678f39cb23960bdd7.tar.gz",
+            .hash = "1220e076a2a2c8dc5ca6d0299a42258fb78bf4715a7e75e4aacb2763762379054518",
         },
     },
 }
