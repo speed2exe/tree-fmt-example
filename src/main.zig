@@ -26,7 +26,7 @@ fn fullExample() !void {
     }
 
     // writer
-    var w = std.io.getStdOut().writer();
+    const w = std.io.getStdOut().writer();
 
     // tree formatter (the actual formatter you use)
     var tree_formatter = treeFormatter(allocator, w);
