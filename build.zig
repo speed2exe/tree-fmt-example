@@ -26,5 +26,5 @@ pub fn build(b: *std.Build) void {
     // This is where you add the dependencies of your project.
     const dep = b.dependency("tree_fmt", .{});
     const tree_fmt = dep.module("tree-fmt");
-    exe.addModule("tree-fmt", tree_fmt);
+    exe.root_module.addImport("tree-fmt", tree_fmt);
 }
