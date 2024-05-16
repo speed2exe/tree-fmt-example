@@ -4,7 +4,7 @@
     .dependencies = .{
         .tree_fmt = .{
             // c6398b225f15cdbe35b3951920f634ffd1c65c12 is just commit hash
-            .url = "https://github.com/speed2exe/tree-fmt/archive/eafb716fccde8a2ed78162d87403253f7967ecc6.tar.gz",
+            .url = "https://github.com/speed2exe/tree-fmt/archive/refs/tags/0.12.0.tar.gz",
             // just do `zig build`, get the error code and replace with expected hash
             .hash = "1220927c2a70ecdeec86b5b0e519b48de335d26bb7a6944435c1baad804eb977cdbc",
         },
