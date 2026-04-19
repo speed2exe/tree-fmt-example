@@ -2,9 +2,9 @@ const std = @import("std");
 const treeFormatter = @import("tree-fmt").treeFormatter;
 var fmt = @import("tree-fmt").defaultFormatter();
 
-pub fn main() !void {
+pub fn main(init: std.process.Init) !void {
     try quickExample();
-    try fullExample();
+    try fullExample(init.gpa);
 }
 
 fn quickExample() !void {
@@ -12,33 +12,27 @@ fn quickExample() !void {
     try fmt.format(.{ 1, 2.4, "hi" }, .{});
 }
 
-fn fullExample() !void {
+fn fullExample(allocator: std.mem.Allocator) !void {
     std.debug.print("\nFull Example:\n", .{});
 
-    // allocator
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-    defer {
-        switch (gpa.deinit()) {
-            .ok => {},
-            .leak => std.log.err("Leaked memory!\n", .{}),
+    const DebugWriter = struct {
+        pub fn print(self: @This(), comptime f: []const u8, args: anytype) !void {
+            _ = self;
+            std.debug.print(f, args);
         }
-    }
+        pub fn writeAll(self: @This(), bytes: []const u8) !void {
+            _ = self;
+            std.debug.print("{s}", .{bytes});
+        }
+    };
 
-    // writer
-    const w = std.io.getStdOut().writer();
+    var tree_formatter = treeFormatter(allocator, DebugWriter{});
 
-    // tree formatter (the actual formatter you use)
-    var tree_formatter = treeFormatter(allocator, w);
-
-    // complicated structure to debug
     var ast = try std.zig.Ast.parse(allocator, zig_code, .zig);
     defer ast.deinit(allocator);
 
-    // print the structure
     try tree_formatter.format(ast.tokens, .{
         .name = "MyFavoriteAst",
-        // other options ...
     });
 }
 
